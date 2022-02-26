@@ -1,13 +1,14 @@
 package com.keyin.sprint1.members;
 
-public class Member {
+import java.time.LocalDate;
 
-    private Long MemberId;
+public class Member {
+    private int MemberId;
     private String MemberName;
     private String MemberAddress;
     private String MemberEmail;
     private String MemberPhoneNumber;
-    private String MembershipStartDate;
+    private LocalDate MembershipStartDate;
     private String MembershipDuration;
     private String MembershipType;
     private String CurrentTournaments;
@@ -17,12 +18,12 @@ public class Member {
     public Member() {
     }
 
-    public Member(Long id,
+    public Member(int id,
                   String memberName,
                   String memberAddress,
                   String memberEmail,
                   String memberPhoneNumber,
-                  String membershipStartDate,
+                  LocalDate membershipStartDate,
                   String membershipDuration,
                   String membershipType,
                   String currentTournaments,
@@ -45,7 +46,7 @@ public class Member {
                   String memberAddress,
                   String memberEmail,
                   String memberPhoneNumber,
-                  String membershipStartDate,
+                  LocalDate membershipStartDate,
                   String membershipDuration,
                   String membershipType,
                   String currentTournaments,
@@ -62,6 +63,15 @@ public class Member {
         PastTournaments = pastTournaments;
         UpcomingTournaments = upcomingTournaments;
     }
+
+    public int getMemberId() {
+        return MemberId;
+    }
+
+    public void setMemberId(int memberId) {
+        MemberId = memberId;
+    }
+
 
     public String getMemberName() {
         return MemberName;
@@ -95,11 +105,11 @@ public class Member {
         MemberPhoneNumber = memberPhoneNumber;
     }
 
-    public String getMembershipStartDate() {
+    public LocalDate getMembershipStartDate() {
         return MembershipStartDate;
     }
 
-    public void setMembershipStartDate(String membershipStartDate) {
+    public void setMembershipStartDate(LocalDate membershipStartDate) {
         MembershipStartDate = membershipStartDate;
     }
 
@@ -141,5 +151,21 @@ public class Member {
 
     public void setUpcomingTournaments(String upcomingTournaments) {
         UpcomingTournaments = upcomingTournaments;
+    }
+
+    @Override
+    public String toString() {
+        return ("Member{" + "Member Id=" + MemberId +
+                ", Member Name='" + MemberName + '\'' +
+                ", Member Address='" + MemberAddress + '\'' +
+                ", Member Email='" + MemberEmail + '\'' +
+                ", Member Phone Number='" + MemberPhoneNumber + '\'' +
+                ", Membership Start Date='" + MembershipStartDate + '\'' +
+                ", Membership Duration='" + MembershipDuration + '\'' +
+                ", Membership Type='" + MembershipType + '\'' +
+                ", Current Tournaments='" + CurrentTournaments + '\'' +
+                ", Past Tournaments='" + PastTournaments + '\'' +
+                ", Upcoming Tournaments='" + UpcomingTournaments + '\'' +
+                '}');
     }
 }

@@ -1,9 +1,8 @@
 package com.keyin.sprint1.members;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class MemberController {
@@ -16,8 +15,8 @@ public class MemberController {
     }
 
     @RequestMapping(path = "api/v1/member")
-    public String getMember(){
+    public List<Member> getMember(){
 
-        return memberService.getMember();
+        return memberService.getMembers();
     }
 }

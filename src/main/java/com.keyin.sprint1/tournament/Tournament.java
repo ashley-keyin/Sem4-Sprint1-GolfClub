@@ -1,10 +1,11 @@
 package com.keyin.sprint1.tournament;
+import java.time.LocalDate;
 
 public class Tournament {
 
-    private Long TournamentId;
-    private String TournamentStartDate;
-    private String TournamentEndDate;
+    private int TournamentId;
+    private LocalDate TournamentStartDate;
+    private LocalDate TournamentEndDate;
     private String TournamentLocation;
     private double TournamentEntryFee;
     private double CashPrizeAmount;
@@ -14,9 +15,9 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament(Long tournamentId,
-                      String tournamentStartDate,
-                      String tournamentEndDate,
+    public Tournament(int tournamentId,
+                      LocalDate tournamentStartDate,
+                      LocalDate tournamentEndDate,
                       String tournamentLocation,
                       double tournamentEntryFee,
                       double cashPrizeAmount,
@@ -32,8 +33,8 @@ public class Tournament {
         FinalStandings = finalStandings;
     }
 
-    public Tournament(String tournamentStartDate,
-                      String tournamentEndDate,
+    public Tournament(LocalDate tournamentStartDate,
+                      LocalDate tournamentEndDate,
                       String tournamentLocation,
                       double tournamentEntryFee,
                       double cashPrizeAmount,
@@ -48,27 +49,27 @@ public class Tournament {
         FinalStandings = finalStandings;
     }
 
-    public Long getTournamentId() {
+    public int getTournamentId() {
         return TournamentId;
     }
 
-    public void setTournamentId(Long tournamentId) {
+    public void setTournamentId(int tournamentId) {
         TournamentId = tournamentId;
     }
 
-    public String getTournamentStartDate() {
+    public LocalDate getTournamentStartDate() {
         return TournamentStartDate;
     }
 
-    public void setTournamentStartDate(String tournamentStartDate) {
+    public void setTournamentStartDate(LocalDate tournamentStartDate) {
         TournamentStartDate = tournamentStartDate;
     }
 
-    public String getTournamentEndDate() {
+    public LocalDate getTournamentEndDate() {
         return TournamentEndDate;
     }
 
-    public void setTournamentEndDate(String tournamentEndDate) {
+    public void setTournamentEndDate(LocalDate tournamentEndDate) {
         TournamentEndDate = tournamentEndDate;
     }
 
@@ -110,6 +111,20 @@ public class Tournament {
 
     public void setFinalStandings(String finalStandings) {
         FinalStandings = finalStandings;
+    }
+
+    @Override
+    public String toString() {
+        return "Tournament{" +
+                "Tournament Id=" + TournamentId +
+                ", Tournament Start Date='" + TournamentStartDate + '\'' +
+                ", Tournament End Date='" + TournamentEndDate + '\'' +
+                ", Tournament Location='" + TournamentLocation + '\'' +
+                ", Tournament Entry Fee=" + "$" + TournamentEntryFee +
+                ", Cash Prize Amount=" + "$" + CashPrizeAmount +
+                ", Tournament Participants='" + TournamentParticipants + '\'' +
+                ", Final Standings='" + FinalStandings + '\'' +
+                '}';
     }
 }
 
