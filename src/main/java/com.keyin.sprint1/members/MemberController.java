@@ -1,5 +1,6 @@
 package com.keyin.sprint1.members;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -14,9 +15,9 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @RequestMapping(path = "api/v1/member")
-    public List<Member> getMember(){
+    @RequestMapping(path = "api/v1/member/{id}")
+    public List<Member> getMember(@PathVariable int id){
 
-        return memberService.getMembers();
+        return memberService.getMembers(id);
     }
 }
