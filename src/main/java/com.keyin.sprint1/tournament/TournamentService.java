@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class TournamentService {
 
-    public List<Tournament> getTournament(int id) {
+    public List<Tournament> getTournament(Integer id) {
         List<Tournament> tournamentList = new ArrayList<Tournament>();
 
         tournamentList.add(new Tournament(
@@ -19,9 +19,7 @@ public class TournamentService {
                 LocalDate.of(2022, Month.JANUARY, 04),
                 "Scotland",
                 200.00,
-                1000.00,
-                "John Doe",
-                "1. John Doe"
+                1000.00
         ));
 
         tournamentList.add(new Tournament(
@@ -30,9 +28,7 @@ public class TournamentService {
                 LocalDate.of(2022, Month.JANUARY, 20),
                 "Pebble",
                 100.00,
-                500.00,
-                "Ashley Mercer, Brad Rice, Chris Lynch",
-                "1. Ashley Mercer 2. Brad Rice 3. Chris Lynch"
+                500.00
         ));
 
         tournamentList.add(new Tournament(
@@ -41,9 +37,7 @@ public class TournamentService {
                 LocalDate.of(2022, Month.MARCH, 04),
                 "European",
                 300.00,
-                1500.00,
-                "Ashley Mercer, Brad Rice, Chris Lynch",
-                "Upcoming Tournament"
+                1500.00
         ));
 
         for (Tournament tournament : tournamentList ) {

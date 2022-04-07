@@ -1,63 +1,69 @@
 package com.keyin.sprint1.members;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
+
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class MemberService {
 
-    public List<Member> getMembers(int id) {
-        List<Member> memberList = new ArrayList<Member>();
+    private final MemberRepository memberRepository;
 
-        memberList.add(new Member(
-                1,
-                "Ashley Mercer",
-                "123 Main Street",
-                "amercer@mail.com",
-                "7095555555",
-                LocalDate.of(2022, Month.JANUARY, 1),
-                "2 years",
-                "Premium",
-                "Pebble, Scottish",
-                "Pebble, Scottish, British, American",
-                "European"
-        ));
+    @Autowired
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
-        memberList.add(new Member(
-                2,
-                "Brad Rice",
-                "123 Other Main Street",
-                "brice@mail.com",
-                "7096666666",
-                LocalDate.of(2022, Month.FEBRUARY, 1),
-                "2 years",
-                "Standard",
-                "British, American",
-                "Pebble, Scottish, British, American",
-                "European, Australian"
-        ));
+    public void addNewMember(Member member) {
+        Optional<Member> memberOptional = memberRepository.findMemberByMemberEmail(member.getMemberEmail());
 
-        memberList.add(new Member(
-                3,
-                "Chris Lynch",
-                "123 Back Street",
-                "clynch@mail.com",
-                "7097777777",
-                LocalDate.of(2022, Month.JANUARY, 10),
-                "2 years",
-                "Default",
-                "Pebble, American",
-                "Pebble, Scottish, British, American",
-                "European, Brazil"
-        ));
-
-        for (Member member : memberList ) {
-            if (member.getMemberId() == id) {
-                return List.of(member);
-            }
+        if (memberOptional.isPresent()){
+            throw new IllegalStateException("Email taken");
         }
-        return null;
+
+        memberRepository.save(member);
+    }
+
+    public void deleteMember(Integer memberId) {
+        boolean exists = memberRepository.existsById(memberId);
+        if (!exists) {
+            throw new IllegalStateException("Member with id: " + memberId + " does not exist");
+        }
+        memberRepository.deleteById(memberId);
+    }
+
+    @Transactional
+    public void updateMember(Integer memberId,
+                             String memberName,
+                             String memberEmail,
+                             String memberPhoneNumber,
+                             String memberAddress) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException(
+                "Member with Id: " + memberId + " does not exist"));
+
+        if (memberName != null && memberName.length() > 0 && !Objects.equals(member.getMemberName(), memberName)) {
+            member.setMemberName(memberName);
+        }
+
+        if (memberEmail != null
+                && memberEmail.length() > 0
+                && !Objects.equals(member.getMemberEmail(), memberEmail)) {
+            Optional<Member> memberOptional = memberRepository.findMemberByMemberEmail(memberEmail);
+            if (memberOptional.isPresent()){
+                throw new IllegalStateException("Email is already taken");
+            }
+            member.setMemberEmail(memberEmail);
+        }
+
+        if (memberPhoneNumber != null && memberPhoneNumber.length() > 0 && !Objects.equals(member.getMemberPhoneNumber(), memberPhoneNumber)) {
+            member.setMemberPhoneNumber(memberPhoneNumber);
+        }
+
+        if (memberAddress != null && memberAddress.length() > 0 && !Objects.equals(member.getMemberAddress(), memberAddress)) {
+            member.setMemberAddress(memberAddress);
+        }
     }
 }

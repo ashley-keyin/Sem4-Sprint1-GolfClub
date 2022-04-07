@@ -1,129 +1,123 @@
 package com.keyin.sprint1.tournament;
-import java.time.LocalDate;
+import com.keyin.sprint1.members.Member;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity
+@Table
 public class Tournament {
 
-    private int TournamentId;
-    private LocalDate TournamentStartDate;
-    private LocalDate TournamentEndDate;
-    private String TournamentLocation;
-    private double TournamentEntryFee;
-    private double CashPrizeAmount;
-    private String TournamentParticipants;
-    private String FinalStandings;
+    @Id
+    @SequenceGenerator(
+            name = "tournament_sequence",
+            sequenceName = "tournament_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "tournament_sequence"
+    )
+    private Integer tournamentId;
+
+    private LocalDate tournamentStartDate;
+    private LocalDate tournamentEndDate;
+    private String tournamentLocation;
+    private Double tournamentEntryFee;
+    private Double cashPrizeAmount;
+
+//    private List<Member> participatingMembers;
 
     public Tournament() {
     }
 
-    public Tournament(int tournamentId,
+    public Tournament(Integer tournamentId,
                       LocalDate tournamentStartDate,
                       LocalDate tournamentEndDate,
                       String tournamentLocation,
-                      double tournamentEntryFee,
-                      double cashPrizeAmount,
-                      String tournamentParticipants,
-                      String finalStandings) {
-        TournamentId = tournamentId;
-        TournamentStartDate = tournamentStartDate;
-        TournamentEndDate = tournamentEndDate;
-        TournamentLocation = tournamentLocation;
-        TournamentEntryFee = tournamentEntryFee;
-        CashPrizeAmount = cashPrizeAmount;
-        TournamentParticipants = tournamentParticipants;
-        FinalStandings = finalStandings;
+                      Double tournamentEntryFee,
+                      Double cashPrizeAmount
+    ) {
+        this.tournamentId = tournamentId;
+        this.tournamentStartDate = tournamentStartDate;
+        this.tournamentEndDate = tournamentEndDate;
+        this.tournamentLocation = tournamentLocation;
+        this.tournamentEntryFee = tournamentEntryFee;
+        this.cashPrizeAmount = cashPrizeAmount;
     }
 
     public Tournament(LocalDate tournamentStartDate,
                       LocalDate tournamentEndDate,
                       String tournamentLocation,
-                      double tournamentEntryFee,
-                      double cashPrizeAmount,
-                      String tournamentParticipants,
-                      String finalStandings) {
-        TournamentStartDate = tournamentStartDate;
-        TournamentEndDate = tournamentEndDate;
-        TournamentLocation = tournamentLocation;
-        TournamentEntryFee = tournamentEntryFee;
-        CashPrizeAmount = cashPrizeAmount;
-        TournamentParticipants = tournamentParticipants;
-        FinalStandings = finalStandings;
+                      Double tournamentEntryFee,
+                      Double cashPrizeAmount
+    ) {
+        this.tournamentStartDate = tournamentStartDate;
+        this.tournamentEndDate = tournamentEndDate;
+        this.tournamentLocation = tournamentLocation;
+        this.tournamentEntryFee = tournamentEntryFee;
+        this.cashPrizeAmount = cashPrizeAmount;
     }
 
     public int getTournamentId() {
-        return TournamentId;
+        return tournamentId;
     }
-
     public void setTournamentId(int tournamentId) {
-        TournamentId = tournamentId;
+        this.tournamentId = tournamentId;
     }
 
     public LocalDate getTournamentStartDate() {
-        return TournamentStartDate;
+        return tournamentStartDate;
     }
-
     public void setTournamentStartDate(LocalDate tournamentStartDate) {
-        TournamentStartDate = tournamentStartDate;
+        this.tournamentStartDate = tournamentStartDate;
     }
 
     public LocalDate getTournamentEndDate() {
-        return TournamentEndDate;
+        return tournamentEndDate;
     }
-
     public void setTournamentEndDate(LocalDate tournamentEndDate) {
-        TournamentEndDate = tournamentEndDate;
+        this.tournamentEndDate = tournamentEndDate;
     }
 
     public String getTournamentLocation() {
-        return TournamentLocation;
+        return tournamentLocation;
     }
-
     public void setTournamentLocation(String tournamentLocation) {
-        TournamentLocation = tournamentLocation;
+        this.tournamentLocation = tournamentLocation;
     }
 
     public double getTournamentEntryFee() {
-        return TournamentEntryFee;
+        return tournamentEntryFee;
     }
-
     public void setTournamentEntryFee(double tournamentEntryFee) {
-        TournamentEntryFee = tournamentEntryFee;
+        this.tournamentEntryFee = tournamentEntryFee;
     }
 
     public double getCashPrizeAmount() {
-        return CashPrizeAmount;
+        return cashPrizeAmount;
     }
-
     public void setCashPrizeAmount(double cashPrizeAmount) {
-        CashPrizeAmount = cashPrizeAmount;
+        this.cashPrizeAmount = cashPrizeAmount;
     }
 
-    public String getTournamentParticipants() {
-        return TournamentParticipants;
-    }
-
-    public void setTournamentParticipants(String tournamentParticipants) {
-        TournamentParticipants = tournamentParticipants;
-    }
-
-    public String getFinalStandings() {
-        return FinalStandings;
-    }
-
-    public void setFinalStandings(String finalStandings) {
-        FinalStandings = finalStandings;
-    }
+//    public List<Member> getParticipatingMembers() {
+//        return participatingMembers;
+//    }
+//    public void setParticipatingMembers(List<Member> participatingMembers) {
+//        this.participatingMembers = participatingMembers;
+//    }
 
     @Override
     public String toString() {
         return "Tournament{" +
-                "Tournament Id=" + TournamentId +
-                ", Tournament Start Date='" + TournamentStartDate + '\'' +
-                ", Tournament End Date='" + TournamentEndDate + '\'' +
-                ", Tournament Location='" + TournamentLocation + '\'' +
-                ", Tournament Entry Fee=" + "$" + TournamentEntryFee +
-                ", Cash Prize Amount=" + "$" + CashPrizeAmount +
-                ", Tournament Participants='" + TournamentParticipants + '\'' +
-                ", Final Standings='" + FinalStandings + '\'' +
+                "Tournament Id=" + tournamentId +
+                ", Tournament Start Date='" + tournamentStartDate + '\'' +
+                ", Tournament End Date='" + tournamentEndDate + '\'' +
+                ", Tournament Location='" + tournamentLocation + '\'' +
+                ", Tournament Entry Fee=" + "$" + tournamentEntryFee +
+                ", Cash Prize Amount=" + "$" + cashPrizeAmount +
                 '}';
     }
 }

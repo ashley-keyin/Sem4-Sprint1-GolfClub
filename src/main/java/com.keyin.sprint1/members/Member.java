@@ -1,45 +1,65 @@
 package com.keyin.sprint1.members;
 
-import java.time.LocalDate;
+import com.keyin.sprint1.tournament.Tournament;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.List;
+
+@Entity
+@Table
 public class Member {
-    private int MemberId;
-    private String MemberName;
-    private String MemberAddress;
-    private String MemberEmail;
-    private String MemberPhoneNumber;
-    private LocalDate MembershipStartDate;
-    private String MembershipDuration;
-    private String MembershipType;
-    private String CurrentTournaments;
-    private String PastTournaments;
-    private String UpcomingTournaments;
+
+    @Id
+    @SequenceGenerator(
+            name = "member_sequence",
+            sequenceName = "member_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.AUTO,
+            generator = "member_sequence"
+    )
+    private Integer memberId;
+
+    private String memberName;
+    private String memberAddress;
+    private String memberEmail;
+    private String memberPhoneNumber;
+    private LocalDate membershipStartDate;
+
+    @Transient
+    private String membershipDuration;
+
+    private String membershipType;
+    private String tournamentStartDate;
+
+    @OneToMany
+    private List<Tournament> tournaments;
 
     public Member() {
     }
 
-    public Member(int id,
+    public Member(Integer id,
                   String memberName,
                   String memberAddress,
                   String memberEmail,
                   String memberPhoneNumber,
                   LocalDate membershipStartDate,
-                  String membershipDuration,
                   String membershipType,
-                  String currentTournaments,
-                  String pastTournaments,
-                  String upcomingTournaments) {
-        MemberId = id;
-        MemberName = memberName;
-        MemberAddress = memberAddress;
-        MemberEmail = memberEmail;
-        MemberPhoneNumber = memberPhoneNumber;
-        MembershipStartDate = membershipStartDate;
-        MembershipDuration = membershipDuration;
-        MembershipType = membershipType;
-        CurrentTournaments = currentTournaments;
-        PastTournaments = pastTournaments;
-        UpcomingTournaments = upcomingTournaments;
+                  String tournamentStartDate,
+                  List<Tournament> tournaments)
+    {
+        this.memberId = id;
+        this.memberName = memberName;
+        this.memberAddress = memberAddress;
+        this.memberEmail = memberEmail;
+        this.memberPhoneNumber = memberPhoneNumber;
+        this.membershipStartDate = membershipStartDate;
+        this.membershipType = membershipType;
+        this.tournamentStartDate = tournamentStartDate;
+        this.tournaments = tournaments;
     }
 
     public Member(String memberName,
@@ -47,125 +67,117 @@ public class Member {
                   String memberEmail,
                   String memberPhoneNumber,
                   LocalDate membershipStartDate,
-                  String membershipDuration,
                   String membershipType,
-                  String currentTournaments,
-                  String pastTournaments,
-                  String upcomingTournaments) {
-        MemberName = memberName;
-        MemberAddress = memberAddress;
-        MemberEmail = memberEmail;
-        MemberPhoneNumber = memberPhoneNumber;
-        MembershipStartDate = membershipStartDate;
-        MembershipDuration = membershipDuration;
-        MembershipType = membershipType;
-        CurrentTournaments = currentTournaments;
-        PastTournaments = pastTournaments;
-        UpcomingTournaments = upcomingTournaments;
+                  String tournamentStartDate,
+                  List<Tournament> tournaments) {
+        this.memberName = memberName;
+        this.memberAddress = memberAddress;
+        this.memberEmail = memberEmail;
+        this.memberPhoneNumber = memberPhoneNumber;
+        this.membershipStartDate = membershipStartDate;
+        this.membershipType = membershipType;
+        this.tournamentStartDate = tournamentStartDate;
+        this.tournaments = tournaments;
     }
 
-    public int getMemberId() {
-        return MemberId;
+    public Integer getMemberId() {
+        return memberId;
     }
 
-    public void setMemberId(int memberId) {
-        MemberId = memberId;
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
 
     public String getMemberName() {
-        return MemberName;
+        return memberName;
     }
 
     public void setMemberName(String memberName) {
-        MemberName = memberName;
+        this.memberName = memberName;
     }
 
+
     public String getMemberAddress() {
-        return MemberAddress;
+        return memberAddress;
     }
 
     public void setMemberAddress(String memberAddress) {
-        MemberAddress = memberAddress;
+        this.memberAddress = memberAddress;
     }
 
+
     public String getMemberEmail() {
-        return MemberEmail;
+        return memberEmail;
     }
 
     public void setMemberEmail(String memberEmail) {
-        MemberEmail = memberEmail;
+        this.memberEmail = memberEmail;
     }
 
+
     public String getMemberPhoneNumber() {
-        return MemberPhoneNumber;
+        return memberPhoneNumber;
     }
 
     public void setMemberPhoneNumber(String memberPhoneNumber) {
-        MemberPhoneNumber = memberPhoneNumber;
+        this.memberPhoneNumber = memberPhoneNumber;
     }
 
+
     public LocalDate getMembershipStartDate() {
-        return MembershipStartDate;
+        return membershipStartDate;
     }
 
     public void setMembershipStartDate(LocalDate membershipStartDate) {
-        MembershipStartDate = membershipStartDate;
+        this.membershipStartDate = membershipStartDate;
     }
+
 
     public String getMembershipDuration() {
-        return MembershipDuration;
+        Period duration = Period.between(this.membershipStartDate,LocalDate.now());
+        return duration.getYears() + " years, " + duration.getMonths() + " months, " + duration.getDays() + " days";
     }
 
-    public void setMembershipDuration(String membershipDuration) {
-        MembershipDuration = membershipDuration;
-    }
+    public void setMembershipDuration(String membershipDuration) {this.membershipDuration = membershipDuration;}
+
 
     public String getMembershipType() {
-        return MembershipType;
+        return membershipType;
     }
 
     public void setMembershipType(String membershipType) {
-        MembershipType = membershipType;
+        this.membershipType = membershipType;
     }
 
-    public String getCurrentTournaments() {
-        return CurrentTournaments;
+    public String getTournamentStartDate() {
+        return tournamentStartDate;
     }
 
-    public void setCurrentTournaments(String currentTournaments) {
-        CurrentTournaments = currentTournaments;
+    public void setTournamentStartDate(String tournamentStartDate) {
+        this.tournamentStartDate = tournamentStartDate;
     }
 
-    public String getPastTournaments() {
-        return PastTournaments;
+    public List<Tournament> getTournaments() {
+        return tournaments;
     }
 
-    public void setPastTournaments(String pastTournaments) {
-        PastTournaments = pastTournaments;
-    }
-
-    public String getUpcomingTournaments() {
-        return UpcomingTournaments;
-    }
-
-    public void setUpcomingTournaments(String upcomingTournaments) {
-        UpcomingTournaments = upcomingTournaments;
+    public void setTournaments(List<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 
     @Override
     public String toString() {
-        return ("Member{" + "Member Id=" + MemberId +
-                ", Member Name='" + MemberName + '\'' +
-                ", Member Address='" + MemberAddress + '\'' +
-                ", Member Email='" + MemberEmail + '\'' +
-                ", Member Phone Number='" + MemberPhoneNumber + '\'' +
-                ", Membership Start Date='" + MembershipStartDate + '\'' +
-                ", Membership Duration='" + MembershipDuration + '\'' +
-                ", Membership Type='" + MembershipType + '\'' +
-                ", Current Tournaments='" + CurrentTournaments + '\'' +
-                ", Past Tournaments='" + PastTournaments + '\'' +
-                ", Upcoming Tournaments='" + UpcomingTournaments + '\'' +
+        return ("Member{" + "Member Id=" + memberId +
+                ", Member Name='" + memberName + '\'' +
+                ", Member Address='" + memberAddress + '\'' +
+                ", Member Email='" + memberEmail + '\'' +
+                ", Member Phone Number='" + memberPhoneNumber + '\'' +
+                ", Membership Start Date='" + membershipStartDate + '\'' +
+                ", Membership Duration='" + membershipDuration + '\'' +
+                ", Membership Type='" + membershipType + '\'' +
+                ", Tournament Start Date='" + tournamentStartDate + '\'' +
+                ", Tournaments='" + tournaments + '\'' +
                 '}');
     }
 }
